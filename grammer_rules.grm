@@ -1,0 +1,159 @@
+"Start Symbol" = <program>
+ 
+!--------------------------------Terminal-------------------
+Id =[_]|{letter}{Alphanumeric}*
+Digit =('+'|'-')?{digit}+ ('.'{digit}+)? (('e'|('-'|'+')?{digit}+) '^' ('+'|'-'){digit}+('.'{digit}+)?)?
+
+!--------------------------------Rules----------------------
+
+<program> ::= '{' <stmt_list> '}'
+
+<stmt_list> ::= <concept>
+             |<concept><stmt_list>
+
+<concept> ::= <identification> 
+           |<assign>
+           |<if_stmt> '.'
+           |<for_loop> '.'
+           |<switch_stmt> '.'
+           |<while_loop> '.'
+           |<do_while_loop> '.'
+           |<case-stmt> '.'
+           |<control-stmt> '.'
+           |<identification> '.'
+           |<function-stmt> '.'
+           |<call-stmt> '.' 
+
+<assign> ::= <id> '=' <expr>
+ 
+<id> ::= Id
+
+<expr> ::= <expr> '+' <expr>
+        |<expr> '-' <expr>
+        |<term>
+        
+<term> ::= <term> '*' <factor>
+        |<term> '/' <factor>
+        |<term> '%' <factor>
+        |<factor>
+        
+<factor> ::= <factor> '**' <exp>
+          |<exp>
+          
+<exp> ::= '('<expr>')'
+       |<id>
+       |<digit>
+       
+<digit> ::= Digit
+
+<identification> ::= type identifier '=' number '.'
+                  | type identifier '=' char '.'
+                  | type identifier '=' string '.'
+                  | type identifier '^''=' number '.'
+                  | type identifier '^''=' string '.'
+                  | type type identifier '^^''='number string '.'
+         
+!-----------------------------if stmt---------
+<if_stmt> ::= if'(' <cond> ')''{' <stmt_list> '}'
+            |if'(' <cond> ')''{' <stmt_list> '}' else '{' <stmt_list> '}'
+            |if '(' <cond> ')''{' <stmt_list> '}' elif '(' <cond> ')''{' <stmt_list> '}' else '{' <stmt_list> '}'
+            
+            
+<cond> ::= <expr> <op> <expr>
+        
+<op> ::= '<'
+      |'>'
+      |'=='
+      |'!='
+      |'>='
+      |'<='
+      
+!-----------------------for stmt----------------
+
+<for_loop> ::= for '(' <data> <assign> ';' <cond> ';' <step>')' '{' <stmt_list> '}'
+            
+<data> ::= int |float |double |String
+        
+<step> ::= --<id>
+        |<id>'--'
+        |'++'<id>
+        |<id>'++'
+        |<id> 
+        |<assign>
+
+
+!-------------while_stm---------------
+                
+<while_loop>::= while'('<assign>')'Go <stmt_list>
+            
+!----------------do_while-----------
+            
+<do_while_loop>::=Do<stmt_list> while'('<assign>')'
+           
+!----------------foe_each_stm-------------------------
+<foreach_stm>::=foreach'('<type><id> in <expr>')'<stmt_list> 
+              
+<type>::= int|double|float|string
+        
+!---------------------------Switch stmt-----------------
+
+<switch_stmt> ::= 'switch' '(' <exp> ')' <switch-block>
+              
+<switch-block> ::= '{' <switch_section> '}'
+                |'{' <switch-block> <switch_section> '}'
+                
+<switch_section> ::= <switch_labels> <stmt_list>';'
+                  
+<switch_labels> ::= <switch_label>
+                  | <switch_labels> <switch_label> ';'
+                  
+<switch_label> ::= 'case' <exp> ':'
+                 | 'default' ';'
+                  
+
+!---------------------------case stmt-----------------
+
+<case-stmts> ::= <case-stmt> 
+              | <case-stmts> <case-stmt>
+              
+<case-stmt> ::= 'case'':'<General-Block>
+             | 'default'':'<General-Block>
+
+<General-Block> ::= '{' <stmt_list> '}'
+
+!--------------------------- control stmt-----------------
+
+<control-stmt> ::= 'gout'
+                | 'continue'
+                | 'goto:'identifier
+                | identifier':'
+                | 'backWith'identifier
+
+!--------------------------- function-stmt-----------------
+<function-stmt> ::= 'func'identifier'('identifier','identifier')''{' <stmt_list> '}'
+                 
+!--------------------------- call-stmt-----------------
+<call-stmt> ::= 'call'identifier'(' <numOrString> ','<numOrString>')'
+
+<numOrString> ::= number 
+               | string
+               
+               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
